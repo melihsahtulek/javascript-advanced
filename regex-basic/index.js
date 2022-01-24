@@ -13,7 +13,11 @@ console.clear();
 /sayHe?llo/.test("sayHello"); // true
 /sayHe?llo/.test("sayHllo"); // true
 
-console.log(/\d{1,2}-\d{1,2}-\d{4}/);
+/\d{1,2}-\d{1,2}-\d{4}/.test("1-30-2005"); // true
+
+/\d+/.exec("one two 100"); // ["100"]
+
+"colorGray".replace(/[a]/, "e"); // colorGrey
 
 /*
 
