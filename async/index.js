@@ -11,16 +11,46 @@ const movies = [
   { id: 5, name: "12 Angry Men", year: 1957, rating: 9.0 },
 ];
 
-const writeMovies = () => {
-  console.table(movies);
+const writeMovies = (list, callback) => {
+  for (const movie of list) {
+    console.log(movie);
+  }
+  console.log("\n");
+  callback();
 };
 
 const addNewMovie = (movie, callback) => {
-  console.log("adding new movie...");
+  console.log("adding new movie...\n");
   setTimeout(() => {
     movies.push(movie);
     callback();
   }, 500);
 };
 
-addNewMovie({ id: movies.length + 1, name: "Schindler's List", year: 1993, rating: 8.9 }, writeMovies);
+const filterByRating = (minRank, callback) => {
+  console.log("filtering by rating...");
+  setTimeout(() => {
+    callback(movies.filter((movie) => movie.rating >= minRank));
+  }, 750);
+};
+
+const filterByDate = (minYear, callback) => {
+  console.log("filtering by year...");
+  setTimeout(() => {
+    callback(movies.filter((movie) => movie.year >= minYear));
+  }, 250);
+};
+
+let movie_1 = { id: movies.length + 1, name: "Schindler's List", year: 1993, rating: 8.9 };
+
+addNewMovie(movie_1, () =>
+  filterByRating(9.2, (data) =>
+    writeMovies(data, () => {
+      filterByDate(2000, (data) => {
+        writeMovies(data, () => {
+          writeMovies(movies, () => {});
+        });
+      });
+    })
+  )
+);
